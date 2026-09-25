@@ -1,26 +1,59 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "@heroui/styles";
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  color-scheme: light;
+  --background: oklch(0.9241 0.0125 51.32);
+  --foreground: oklch(0.2192 0.0171 42.5);
+  --surface: oklch(0.9811 0.0043 56.38);
+  --surface-foreground: var(--foreground);
+  --muted: oklch(0.4813 0.0335 45.88);
+  --default: oklch(0.8815 0.016 47.5);
+  --default-foreground: var(--foreground);
+
+  --accent: oklch(0.6212 0.2085 31.8);
+  --accent-foreground: oklch(0.9911 0 0);
+
+  --success: oklch(0.5936 0.1554 155.5);
+  --success-foreground: oklch(0.9911 0 0);
+  --warning: oklch(0.7319 0.1585 72.33);
+  --warning-foreground: oklch(0.2103 0.0059 285.89);
+  --danger: oklch(0.5732 0.2145 25.74);
+  --danger-foreground: oklch(0.9911 0 0);
+
+  --border: oklch(0.8489 0.0192 47.5);
+  --separator: var(--border);
+  --focus: var(--accent);
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.dark,
+[data-theme="dark"] {
+  color-scheme: dark;
+  --background: oklch(0.1913 0.0116 42.5);
+  --foreground: oklch(0.9682 0.0041 56.38);
+  --surface: oklch(0.2489 0.0157 42.5);
+  --surface-foreground: var(--foreground);
+  --muted: oklch(0.6637 0.0286 45.88);
+  --default: oklch(0.298 0.0138 45.54);
+  --default-foreground: var(--foreground);
+
+  --accent: oklch(0.7212 0.169 36.2);
+  --accent-foreground: oklch(0.1913 0.0116 42.5);
+
+  --success: oklch(0.7329 0.1935 150.81);
+  --success-foreground: oklch(0.16 0.005 285.823);
+  --warning: oklch(0.8319 0.1585 72.33);
+  --warning-foreground: oklch(0.16 0.005 285.823);
+  --danger: oklch(0.6932 0.2145 25.74);
+  --danger-foreground: oklch(0.16 0.005 285.823);
+
+  --border: oklch(0.3392 0.0173 45.94);
+  --separator: var(--border);
+  --focus: var(--accent);
 }
+
