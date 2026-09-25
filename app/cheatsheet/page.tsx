@@ -11,16 +11,16 @@ export default async function CheatSheetPage(props: PageProps<"/cheatsheet">) {
   const { cheatSheet } = content;
 
   return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
+    <div className="mx-auto max-w-7xl px-4 py-8">
       <h1 className="mb-4 text-2xl font-semibold">Cheat Sheet</h1>
       <Card className="mb-6 border-warning bg-warning/20 p-4 text-sm text-foreground">
         {cheatSheet.gradingNote}
       </Card>
-      <div className="space-y-6">
+      <div className="columns-2 gap-3 sm:columns-3 md:columns-4 lg:columns-5 xl:columns-6">
         {cheatSheet.sections.map((section) => (
-          <div key={section.heading}>
-            <h2 className="mb-2 flex items-center gap-2 font-medium">
-              {section.heading}
+          <Card key={section.heading} className="mb-3 flex break-inside-avoid flex-col gap-2 p-3">
+            <h2 className="flex items-center justify-between gap-1 text-sm font-medium">
+              <span>{section.heading}</span>
               <Chip
                 size="sm"
                 color={section.tier === "core" ? "success" : "default"}
@@ -29,12 +29,12 @@ export default async function CheatSheetPage(props: PageProps<"/cheatsheet">) {
                 <Chip.Label>{section.tier === "core" ? "Core" : "Hedge"}</Chip.Label>
               </Chip>
             </h2>
-            <ul className="list-inside list-disc space-y-1 text-sm text-surface-foreground">
+            <ul className="list-inside list-disc space-y-1 text-xs text-surface-foreground">
               {section.items.map((item, i) => (
                 <li key={i}>{item}</li>
               ))}
             </ul>
-          </div>
+          </Card>
         ))}
       </div>
     </div>

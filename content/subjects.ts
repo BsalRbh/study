@@ -2,11 +2,10 @@ import type { Subject } from "./types";
 
 export const subjects: Subject[] = [
   {
-    id: "sample",
-    name: "Sample Subject",
-    code: "PGDCA-2XX",
-    semester: "PGDCA 2nd Semester",
-    examDate: "2026-12-01",
+    id: "dsa",
+    name: "Data Structure and Algorithm",
+    code: "PCA154",
+    semester: "PGDCA 1st Year, 2nd Semester",
   },
 ];
 

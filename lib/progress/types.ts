@@ -31,6 +31,7 @@ export interface SubjectProgress {
   bookmarks: string[];
   attempts: QuizAttempt[];
   dailyChallengeCompletedDates: string[];
+  pomodorosCompleted: number;
 }
 
 export function createEmptyProgress(subjectId: string): SubjectProgress {
@@ -43,5 +44,6 @@ export function createEmptyProgress(subjectId: string): SubjectProgress {
     bookmarks: [],
     attempts: [],
     dailyChallengeCompletedDates: [],
+    pomodorosCompleted: 0,
   };
 }

@@ -1,12 +1,12 @@
 import type { SubjectContent } from "./types";
-import { sampleContent } from "./sample";
+import { dsaContent } from "./dsa";
 
 const contentBySubject: Record<string, SubjectContent> = {
-  sample: sampleContent,
+  dsa: dsaContent,
 };
 
 export function getSubjectContent(subjectId: string): SubjectContent {
-  return contentBySubject[subjectId] ?? sampleContent;
+  return contentBySubject[subjectId] ?? dsaContent;
 }
 
 export { subjects, defaultSubjectId, getSubject } from "./subjects";

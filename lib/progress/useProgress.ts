@@ -101,11 +101,22 @@ export function useProgress(subjectId: string, content: SubjectContent) {
     [commit]
   );
 
+  const recordPomodoroSession = useCallback(
+    () =>
+      commit((p) => ({
+        ...p,
+        xp: p.xp + XP_REWARDS.pomodoroCompleted,
+        pomodorosCompleted: p.pomodorosCompleted + 1,
+      })),
+    [commit]
+  );
+
   return {
     progress,
     recordFlashcardResult,
     recordQuizAttempt,
     markDailyChallengeDone,
     toggleBookmark,
+    recordPomodoroSession,
   };
 }

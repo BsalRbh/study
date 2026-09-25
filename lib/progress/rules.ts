@@ -9,6 +9,7 @@ export const XP_REWARDS = {
   recallCorrect: 4,
   mockPaperQuestionAttempted: 5,
   dailyChallengeCompleted: 15,
+  pomodoroCompleted: 10,
 } as const;
 
 export function levelForXp(xp: number): number {
@@ -60,6 +61,12 @@ export const BADGES: Badge[] = [
     label: "One Week Strong",
     description: "Reached a 7-day study streak",
     check: (progress) => progress.streak.longest >= 7,
+  },
+  {
+    id: "focused-10",
+    label: "Focused",
+    description: "Completed 10 Pomodoro sessions",
+    check: (progress) => progress.pomodorosCompleted >= 10,
   },
 ];
 
