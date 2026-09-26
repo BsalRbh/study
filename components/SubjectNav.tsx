@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { subjects } from "@/content/subjects";
+import { PomodoroWidget } from "./PomodoroWidget";
 import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_LINKS = [
@@ -49,6 +50,7 @@ function SubjectNavInner() {
           </Link>
         ))}
         <div className="ml-auto flex items-center gap-3">
+          <PomodoroWidget />
           <ThemeToggle />
         </div>
       </div>

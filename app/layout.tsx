@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SubjectNav } from "@/components/SubjectNav";
 import { BadgeToastHost } from "@/components/BadgeToastHost";
-import { PomodoroWidget } from "@/components/PomodoroWidget";
 import { ProgressProvider } from "@/lib/progress/context";
 import { PomodoroProvider } from "@/lib/pomodoro/context";
 import { Providers } from "./providers";
@@ -37,7 +36,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <SubjectNav />
               <main className="flex-1">{children}</main>
               <BadgeToastHost />
-              <PomodoroWidget />
             </PomodoroProvider>
           </ProgressProvider>
         </Providers>
