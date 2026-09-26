@@ -67,7 +67,7 @@ export function AnswerCard({
         <p className="font-medium">{question.prompt}</p>
       </button>
       {expanded ? (
-        <div className="mt-2 text-base leading-relaxed text-surface-foreground">
+        <div className="mt-2 text-base leading-relaxed text-muted">
           <FormattedAnswer text={question.answer} />
         </div>
       ) : (
