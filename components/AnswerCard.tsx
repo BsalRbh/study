@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Card, Chip } from "@heroui/react";
+import ReactMarkdown from "react-markdown";
 import type { Question } from "@/content/types";
 import { useProgress } from "@/lib/progress/useProgress";
 import type { SubjectContent } from "@/content/types";
@@ -13,16 +14,20 @@ function chipColorForMarks(marks: number): "accent" | "success" | "default" {
   return "default";
 }
 
+const MARKDOWN_COMPONENTS = {
+  p: ({ ...props }) => <p className="mt-2 first:mt-0" {...props} />,
+  ol: ({ ...props }) => (
+    <ol className="mt-2 list-decimal space-y-1 pl-5" {...props} />
+  ),
+  ul: ({ ...props }) => (
+    <ul className="mt-2 list-disc space-y-1 pl-5" {...props} />
+  ),
+  strong: ({ ...props }) => <strong className="font-medium" {...props} />,
+};
+
 function FormattedAnswer({ text }: { text: string }) {
-  const paragraphs = text.split("\n\n");
   return (
-    <>
-      {paragraphs.map((paragraph, i) => (
-        <p key={i} className={i > 0 ? "mt-3" : undefined}>
-          {paragraph}
-        </p>
-      ))}
-    </>
+    <ReactMarkdown components={MARKDOWN_COMPONENTS}>{text}</ReactMarkdown>
   );
 }
 
@@ -67,7 +72,7 @@ export function AnswerCard({
         <p className="font-medium">{question.prompt}</p>
       </button>
       {expanded ? (
-        <div className="mt-2 text-base leading-relaxed text-muted">
+        <div className="mt-2 text-base leading-relaxed text-foreground/80">
           <FormattedAnswer text={question.answer} />
         </div>
       ) : (
