@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card } from "@heroui/react";
 import { subjects } from "@/content/subjects";
-import { daysBetween, todayIso } from "@/lib/progress/date";
+import { ExamCountdown } from "@/components/ExamCountdown";
 
 export default function Home() {
   return (
@@ -12,9 +12,6 @@ export default function Home() {
       </p>
       <ul className="mt-8 space-y-4">
         {subjects.map((subject) => {
-          const daysLeft = subject.examDate
-            ? daysBetween(todayIso(), subject.examDate)
-            : null;
           return (
             <li key={subject.id}>
               <Link href={`/dashboard?subject=${subject.id}`}>
@@ -28,11 +25,7 @@ export default function Home() {
                         </div>
                       )}
                     </div>
-                    {daysLeft !== null && (
-                      <div className="text-sm text-muted">
-                        {daysLeft >= 0 ? `${daysLeft} days to exam` : "Exam passed"}
-                      </div>
-                    )}
+                    <ExamCountdown subjectId={subject.id} fallbackDate={subject.examDate} />
                   </div>
                 </Card>
               </Link>

@@ -50,6 +50,25 @@ export function dueCards(
     });
 }
 
+export function isCardWeak(cardId: string, progress: SubjectProgress): boolean {
+  const cardProgress = progress.cardProgress[cardId];
+  if (!cardProgress) return false;
+  return (
+    cardProgress.lastResult === "missed" ||
+    (cardProgress.box === 1 && cardProgress.timesSeen >= 2)
+  );
+}
+
+export function weakCards(flashcards: Flashcard[], progress: SubjectProgress): Flashcard[] {
+  return flashcards
+    .filter((card) => isCardWeak(card.id, progress))
+    .sort(
+      (a, b) =>
+        (progress.cardProgress[b.id]?.timesSeen ?? 0) -
+        (progress.cardProgress[a.id]?.timesSeen ?? 0)
+    );
+}
+
 export function isCardMastered(cardId: string, progress: SubjectProgress): boolean {
   const cardProgress = progress.cardProgress[cardId];
   return !!cardProgress && cardProgress.box >= MASTERED_BOX;

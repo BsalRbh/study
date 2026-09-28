@@ -9,5 +9,7 @@ export default async function GlossaryPage(props: PageProps<"/glossary">) {
   ).id;
   const content = getSubjectContent(subjectId);
 
-  return <SearchableGlossary subjectId={subjectId} content={content} />;
+  const q = typeof searchParams.q === "string" ? searchParams.q : "";
+
+  return <SearchableGlossary subjectId={subjectId} content={content} initialQuery={q} />;
 }

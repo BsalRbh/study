@@ -1,6 +1,7 @@
 import { Card, Chip } from "@heroui/react";
 import { getSubjectContent } from "@/content";
 import { getSubject } from "@/content/subjects";
+import { MathText } from "@/components/MathText";
 
 export default async function CheatSheetPage(props: PageProps<"/cheatsheet">) {
   const searchParams = await props.searchParams;
@@ -31,7 +32,9 @@ export default async function CheatSheetPage(props: PageProps<"/cheatsheet">) {
             </h2>
             <ul className="list-inside list-disc space-y-1 text-xs text-surface-foreground">
               {section.items.map((item, i) => (
-                <li key={i}>{item}</li>
+                <li key={i}>
+                  <MathText text={item} inline />
+                </li>
               ))}
             </ul>
           </Card>

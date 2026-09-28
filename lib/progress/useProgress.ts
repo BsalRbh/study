@@ -28,7 +28,7 @@ function applyStreak(progress: SubjectProgress): SubjectProgress {
   };
 }
 
-export function useProgress(subjectId: string, content: SubjectContent) {
+export function useProgressSnapshot(subjectId: string): SubjectProgress {
   const store = useProgressStore();
 
   const subscribe = useCallback(
@@ -39,7 +39,12 @@ export function useProgress(subjectId: string, content: SubjectContent) {
   const emptyProgress = useMemo(() => createEmptyProgress(subjectId), [subjectId]);
   const getServerSnapshot = useCallback(() => emptyProgress, [emptyProgress]);
 
-  const progress = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+}
+
+export function useProgress(subjectId: string, content: SubjectContent) {
+  const store = useProgressStore();
+  const progress = useProgressSnapshot(subjectId);
 
   const commit = useCallback(
     (updater: (p: SubjectProgress) => SubjectProgress) => {
@@ -111,8 +116,15 @@ export function useProgress(subjectId: string, content: SubjectContent) {
     [commit]
   );
 
+  // Not a study action, so it bypasses commit() and doesn't touch the streak.
+  const setExamDate = useCallback(
+    (examDate: string | undefined) => store.save(subjectId, { ...progress, examDate }),
+    [store, subjectId, progress]
+  );
+
   return {
     progress,
+    setExamDate,
     recordFlashcardResult,
     recordQuizAttempt,
     markDailyChallengeDone,

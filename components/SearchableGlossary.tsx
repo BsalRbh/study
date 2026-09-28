@@ -5,16 +5,19 @@ import { Card, SearchField } from "@heroui/react";
 import type { SubjectContent } from "@/content/types";
 import { useProgress } from "@/lib/progress/useProgress";
 import { BookmarkButton } from "./BookmarkButton";
+import { MathText } from "@/components/MathText";
 
 export function SearchableGlossary({
   subjectId,
   content,
+  initialQuery = "",
 }: {
   subjectId: string;
   content: SubjectContent;
+  initialQuery?: string;
 }) {
   const { progress, toggleBookmark } = useProgress(subjectId, content);
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(initialQuery);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -33,7 +36,11 @@ export function SearchableGlossary({
         onChange={setQuery}
         className="mb-6"
       >
-        <SearchField.Input placeholder="Search terms..." />
+        <SearchField.Group>
+          <SearchField.SearchIcon />
+          <SearchField.Input placeholder="Search terms..." />
+          <SearchField.ClearButton />
+        </SearchField.Group>
       </SearchField>
       <div className="space-y-3">
         {filtered.map((term) => {
@@ -42,7 +49,9 @@ export function SearchableGlossary({
             <Card key={term.term} className="flex-row items-start justify-between gap-2 p-3">
               <div>
                 <div className="font-medium">{term.term}</div>
-                <div className="text-sm text-surface-foreground">{term.definition}</div>
+                <div className="text-sm text-surface-foreground">
+                  <MathText text={term.definition} inline />
+                </div>
               </div>
               <BookmarkButton
                 bookmarked={progress.bookmarks.includes(key)}

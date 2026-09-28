@@ -32,6 +32,7 @@ export interface SubjectProgress {
   attempts: QuizAttempt[];
   dailyChallengeCompletedDates: string[];
   pomodorosCompleted: number;
+  examDate?: string;
 }
 
 export function createEmptyProgress(subjectId: string): SubjectProgress {

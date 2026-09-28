@@ -16,7 +16,7 @@
   --default: oklch(0.8815 0.016 47.5);
   --default-foreground: var(--foreground);
 
-  --accent: oklch(0.6212 0.2085 31.8);
+  --accent: oklch(0.58 0.2085 31.8);
   --accent-foreground: oklch(0.9911 0 0);
 
   --success: oklch(0.5936 0.1554 155.5);
@@ -29,6 +29,48 @@
   --border: oklch(0.8489 0.0192 47.5);
   --separator: var(--border);
   --focus: var(--accent);
+
+  --overlay: var(--surface);
+  --overlay-foreground: var(--foreground);
+}
+
+.flip-card {
+  perspective: 1000px;
+}
+
+.flip-card__inner {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 500ms ease;
+}
+
+.flip-card[data-flipped="true"] .flip-card__inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card__face {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.flip-card__face--back {
+  transform: rotateY(180deg);
+}
+
+/* The face currently hidden behind the card is taken out of flow so the
+   visible face alone determines the container's height (answers are
+   usually longer than questions, so sizing to the front only would clip
+   the back face's text). */
+.flip-card:not([data-flipped="true"]) .flip-card__face--back,
+.flip-card[data-flipped="true"] .flip-card__face--front {
+  position: absolute;
+  inset: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-card__inner {
+    transition: none;
+  }
 }
 
 .dark,
@@ -55,5 +97,8 @@
   --border: oklch(0.3392 0.0173 45.94);
   --separator: var(--border);
   --focus: var(--accent);
+
+  --overlay: var(--surface);
+  --overlay-foreground: var(--foreground);
 }
 

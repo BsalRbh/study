@@ -1,4 +1,11 @@
 import type { SubjectContent } from "@/content/types";
+import { unit1Notes } from "./notes/unit-1";
+import { unit2Notes } from "./notes/unit-2";
+import { unit3Notes } from "./notes/unit-3";
+import { unit4Notes } from "./notes/unit-4";
+import { unit5Notes } from "./notes/unit-5";
+import { unit6Notes } from "./notes/unit-6";
+import { unit7Notes } from "./notes/unit-7";
 
 export const dsaContent: SubjectContent = {
   flashcards: [
@@ -1586,11 +1593,13 @@ export const dsaContent: SubjectContent = {
       {
         unit: "Unit 1: Introduction",
         topics: ["Introduction to Data and Data Types", "Data Structure (DS)", "Abstract Data Type (ADT) and Applications"],
+        notes: unit1Notes,
         weightageMarks: 6,
       },
       {
         unit: "Unit 2: Algorithm Efficiency and Complexity",
         topics: ["The RAM Model", "Algorithm Analysis", "Asymptotic Notations: big O, sigma, theta, omega"],
+        notes: unit2Notes,
         weightageMarks: 6,
       },
       {
@@ -1607,6 +1616,7 @@ export const dsaContent: SubjectContent = {
           "Queue Overflow and Underflow Conditions",
           "Linear, Circular & Priority Queue",
         ],
+        notes: unit3Notes,
         weightageMarks: 18,
       },
       {
@@ -1621,11 +1631,13 @@ export const dsaContent: SubjectContent = {
           "Insertion/Deletion of a Node: Front, Last, Before/After a Given Node",
           "Linked List implementation of Stack and Queue",
         ],
+        notes: unit4Notes,
         weightageMarks: 12,
       },
       {
         unit: "Unit 5: Recursion",
         topics: ["Principle of Recursion", "Applications: Fibonacci Sequence, Tower of Hanoi (TOH), Multiplication of Natural Numbers"],
+        notes: unit5Notes,
         weightageMarks: 6,
       },
       {
@@ -1644,6 +1656,7 @@ export const dsaContent: SubjectContent = {
           "Spanning Tree, Minimum Spanning Tree: Kruskal's & Prim's Algorithm",
           "Shortest Path: Floyd Warshall's & Dijkstra's Algorithm",
         ],
+        notes: unit6Notes,
         weightageMarks: 24,
       },
       {
@@ -1654,6 +1667,7 @@ export const dsaContent: SubjectContent = {
           "Sorting: Insertion, Selection, Bubble, Quick Sort, Merge Sort, Radix Sort, Shell Sort, Heap Sort",
           "Efficiency of Searching and Sorting Algorithms",
         ],
+        notes: unit7Notes,
         weightageMarks: 18,
       },
     ],

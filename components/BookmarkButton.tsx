@@ -12,12 +12,12 @@ export function BookmarkButton({
   return (
     <Button
       variant="ghost"
-      size="sm"
+      size="lg"
       isIconOnly
       onPress={onToggle}
       aria-pressed={bookmarked}
       aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
-      className={bookmarked ? "text-warning" : "text-muted"}
+      className={`min-h-11 min-w-11 ${bookmarked ? "text-warning" : "text-muted"}`}
     >
       {bookmarked ? "★" : "☆"}
     </Button>

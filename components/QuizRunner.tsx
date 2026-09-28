@@ -6,6 +6,7 @@ import { dueCards } from "@/lib/progress/leitner";
 import { buildQuizQuestions } from "@/lib/progress/quiz";
 import { XP_REWARDS } from "@/lib/progress/rules";
 import { useProgress } from "@/lib/progress/useProgress";
+import { MathText } from "@/components/MathText";
 
 export function QuizRunner({
   subjectId,
@@ -82,7 +83,9 @@ export function QuizRunner({
         </span>
         <span>Score: {score}</span>
       </div>
-      <h2 className="mb-4 text-lg font-medium">{question.prompt}</h2>
+      <h2 className="mb-4 text-lg font-medium">
+        <MathText text={question.prompt} inline />
+      </h2>
       <div className="space-y-3">
         {question.options.map((option, i) => {
           const isCorrect = i === question.correctIndex;
@@ -98,9 +101,21 @@ export function QuizRunner({
               type="button"
               disabled={selected !== null}
               onClick={() => handleSelect(i)}
-              className={`block w-full rounded-2xl border px-4 py-3 text-left text-sm leading-relaxed transition-colors disabled:cursor-default ${style}`}
+              className={`flex min-h-11 w-full items-center gap-2 rounded-2xl border px-4 py-3 text-left text-sm leading-relaxed transition-colors disabled:cursor-default ${style}`}
             >
-              {option}
+              <span className="flex-1">
+                <MathText text={option} inline />
+              </span>
+              {selected !== null && isCorrect && (
+                <span aria-hidden className="shrink-0 text-success">
+                  ✓
+                </span>
+              )}
+              {selected !== null && isSelected && !isCorrect && (
+                <span aria-hidden className="shrink-0 text-danger">
+                  ✕
+                </span>
+              )}
             </button>
           );
         })}

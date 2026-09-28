@@ -70,10 +70,19 @@ export interface GlossaryTerm {
   definition: string;
 }
 
+export interface TopicNote {
+  // Shown before the notes so students attempt recall first.
+  selfTest: string[];
+  // Markdown (KaTeX supported via $...$).
+  body: string;
+}
+
 export interface SyllabusUnit {
   unit: string;
   topics: string[];
   weightageMarks?: number;
+  // Keyed by the exact topic string in `topics`.
+  notes?: Record<string, TopicNote>;
 }
 
 export interface Syllabus {

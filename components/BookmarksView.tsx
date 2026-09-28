@@ -4,6 +4,7 @@ import { Card } from "@heroui/react";
 import type { SubjectContent } from "@/content/types";
 import { useProgress } from "@/lib/progress/useProgress";
 import { BookmarkButton } from "./BookmarkButton";
+import { MathText } from "@/components/MathText";
 
 function resolveBookmark(key: string, content: SubjectContent) {
   const [type, ...rest] = key.split(":");
@@ -50,8 +51,12 @@ export function BookmarksView({
             return (
               <Card key={key} className="flex-row items-start justify-between gap-2 p-3">
                 <div>
-                  <div className="font-medium">{label}</div>
-                  <div className="text-sm text-surface-foreground">{detail}</div>
+                  <div className="font-medium">
+                    <MathText text={label} />
+                  </div>
+                  <div className="text-sm text-surface-foreground">
+                    <MathText text={detail} />
+                  </div>
                 </div>
                 <BookmarkButton bookmarked onToggle={() => toggleBookmark(key)} />
               </Card>

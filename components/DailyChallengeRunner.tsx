@@ -6,6 +6,7 @@ import type { SubjectContent } from "@/content/types";
 import { buildDailyChallenge } from "@/lib/progress/dailyChallenge";
 import { todayIso } from "@/lib/progress/date";
 import { useProgress } from "@/lib/progress/useProgress";
+import { MathText } from "@/components/MathText";
 
 export function DailyChallengeRunner({
   subjectId,
@@ -67,12 +68,18 @@ export function DailyChallengeRunner({
 
       {item.kind === "flashcard" ? (
         <div>
-          <p className="mb-4 text-lg">{item.card.front}</p>
+          <p className="mb-4 text-lg">
+            <MathText text={item.card.front} inline />
+          </p>
           {revealed ? (
             <>
-              <p className="mb-4 text-surface-foreground">{item.card.back}</p>
+              <p className="mb-4 text-surface-foreground">
+                <MathText text={item.card.back} inline />
+              </p>
               <div className="flex gap-3">
                 <Button
+                  size="lg"
+                  className="min-h-11 min-w-28"
                   variant="danger-soft"
                   onPress={() => {
                     recordFlashcardResult(item.card.id, "missed");
@@ -82,6 +89,8 @@ export function DailyChallengeRunner({
                   Missed it
                 </Button>
                 <Button
+                  size="lg"
+                  className="min-h-11 min-w-28"
                   variant="primary"
                   onPress={() => {
                     recordFlashcardResult(item.card.id, "knew");
@@ -93,7 +102,7 @@ export function DailyChallengeRunner({
               </div>
             </>
           ) : (
-            <Button variant="outline" onPress={() => setRevealed(true)}>
+            <Button size="lg" className="min-h-11" variant="outline" onPress={() => setRevealed(true)}>
               Reveal answer
             </Button>
           )}
@@ -109,12 +118,12 @@ export function DailyChallengeRunner({
               <p className="mb-4 whitespace-pre-line text-surface-foreground">
                 {item.question.answer}
               </p>
-              <Button variant="primary" onPress={advance}>
+              <Button size="lg" className="min-h-11" variant="primary" onPress={advance}>
                 Next
               </Button>
             </>
           ) : (
-            <Button variant="outline" onPress={() => setRevealed(true)}>
+            <Button size="lg" className="min-h-11" variant="outline" onPress={() => setRevealed(true)}>
               Reveal model answer
             </Button>
           )}

@@ -7,6 +7,7 @@ import { isCloseEnough } from "@/lib/progress/fuzzyMatch";
 import { XP_REWARDS } from "@/lib/progress/rules";
 import { seededShuffle } from "@/lib/progress/seededShuffle";
 import { useProgress } from "@/lib/progress/useProgress";
+import { MathText } from "@/components/MathText";
 
 export function RecallRunner({
   subjectId,
@@ -81,7 +82,9 @@ export function RecallRunner({
         </span>
         <span>Score: {score}</span>
       </div>
-      <p className="mb-4 text-lg">{term.definition}</p>
+      <p className="mb-4 text-lg">
+        <MathText text={term.definition} inline />
+      </p>
       <p className="mb-2 text-xs uppercase tracking-wide text-muted">
         What term does this define?
       </p>
