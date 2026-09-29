@@ -1,6 +1,8 @@
 export interface Subject {
   id: string;
   name: string;
+  /** Short badge label on the home page (2–4 chars); falls back to initials. */
+  shortName?: string;
   code?: string;
   semester?: string;
   examDate?: string;

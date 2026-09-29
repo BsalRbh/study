@@ -7,7 +7,7 @@ import type { Key } from "@heroui/react";
 import { Dropdown, Drawer } from "@heroui/react";
 import { subjects } from "@/content/subjects";
 import { PomodoroWidget } from "./PomodoroWidget";
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemePicker } from "./ThemePicker";
 
 const NAV_GROUPS = [
   {
@@ -74,7 +74,7 @@ function SubjectNavInner() {
   const activeGroup = NAV_GROUPS.find((g) => g.links.some((l) => l.href === pathname));
 
   return (
-    <nav className="border-b border-border bg-surface">
+    <nav className="sticky top-0 z-40 border-b border-border bg-surface/75 backdrop-blur-md">
       <div className="mx-auto flex max-w-5xl items-center gap-2 px-4 py-2 text-sm">
         <Drawer>
           <Drawer.Trigger
@@ -131,8 +131,14 @@ function SubjectNavInner() {
 
         <Link
           href="/"
-          className="mr-1 hidden min-h-11 items-center font-semibold whitespace-nowrap sm:flex"
+          className="mr-1 hidden min-h-11 items-center gap-2 font-semibold tracking-tight whitespace-nowrap sm:flex"
         >
+          <span
+            aria-hidden
+            className="grid h-7 w-7 place-items-center rounded-lg bg-accent text-xs font-bold text-accent-foreground shadow-sm"
+          >
+            EP
+          </span>
           Exam Prep Hub
         </Link>
 
@@ -208,7 +214,7 @@ function SubjectNavInner() {
             <span className="hidden lg:inline">Search</span>
           </Link>
           <PomodoroWidget />
-          <ThemeToggle />
+          <ThemePicker />
         </div>
       </div>
     </nav>
@@ -217,7 +223,7 @@ function SubjectNavInner() {
 
 export function SubjectNav() {
   return (
-    <Suspense fallback={<nav className="h-12.25 border-b border-border bg-surface" />}>
+    <Suspense fallback={<nav className="sticky top-0 z-40 h-15.25 border-b border-border bg-surface/80" />}>
       <SubjectNavInner />
     </Suspense>
   );

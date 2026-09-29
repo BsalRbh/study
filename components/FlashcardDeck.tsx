@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useEffectEvent, useMemo, useState } from "react";
 import { Button, Card } from "@heroui/react";
 import type { Flashcard, SubjectContent } from "@/content/types";
 import { todayIso } from "@/lib/progress/date";
@@ -14,6 +14,14 @@ import { MathText } from "@/components/MathText";
 import { StudyLayout } from "@/components/StudyLayout";
 
 export type DeckMode = "due" | "mixed" | "weak";
+
+function Kbd({ children }: { children: React.ReactNode }) {
+  return (
+    <kbd className="rounded border border-border bg-surface-secondary px-1.5 py-0.5 font-mono text-[11px] text-foreground">
+      {children}
+    </kbd>
+  );
+}
 
 const MODE_INFO: Record<Exclude<DeckMode, "due">, { title: string; hint: string }> = {
   mixed: {
@@ -83,6 +91,31 @@ export function FlashcardDeck({
     // A "knew" card leaves the queue, so the next card slides into the same index.
     if (result === "missed") setIndex((i) => i + 1);
   }
+
+  const onKey = useEffectEvent((e: KeyboardEvent) => {
+    if (!card || e.metaKey || e.ctrlKey || e.altKey) return;
+    const target = e.target as HTMLElement | null;
+    if (target?.closest("input, textarea, select, [contenteditable], [role='dialog'], [role='menu']")) return;
+    const isActivate = e.key === " " || e.key === "Enter";
+    // Space/Enter on a focused button/link already activates it; don't double-handle.
+    if (isActivate && target?.closest("button, a, [role='button']")) return;
+    if (isActivate) {
+      e.preventDefault();
+      setFlipped((f) => !f);
+    } else if (flipped && (e.key === "ArrowLeft" || e.key === "1")) {
+      e.preventDefault();
+      handleResult("missed");
+    } else if (flipped && (e.key === "ArrowRight" || e.key === "2")) {
+      e.preventDefault();
+      handleResult("knew");
+    }
+  });
+
+  useEffect(() => {
+    const listener = (e: KeyboardEvent) => onKey(e);
+    window.addEventListener("keydown", listener);
+    return () => window.removeEventListener("keydown", listener);
+  }, []);
 
   const info = mode === "due" ? null : MODE_INFO[mode];
   const countLabel = mode === "weak" ? `${queue.length} weak` : `${queue.length} due today`;
@@ -158,7 +191,12 @@ export function FlashcardDeck({
               </Card>
             </button>
           </div>
-          <p className="mt-2 text-center text-xs text-muted">Tap card to flip</p>
+          <p className="mt-2 text-center text-xs text-muted sm:hidden">Tap card to flip</p>
+          <p className="mt-2 hidden items-center justify-center gap-3 text-xs text-muted sm:flex">
+            <span><Kbd>Space</Kbd> flip</span>
+            <span><Kbd>←</Kbd> missed</span>
+            <span><Kbd>→</Kbd> knew</span>
+          </p>
 
           {flipped && (
             <div className="mt-4 flex justify-center gap-3">

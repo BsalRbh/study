@@ -5,6 +5,7 @@ import { SubjectNav } from "@/components/SubjectNav";
 import { BadgeToastHost } from "@/components/BadgeToastHost";
 import { ProgressProvider } from "@/lib/progress/context";
 import { PomodoroProvider } from "@/lib/pomodoro/context";
+import { DEFAULT_PALETTE, paletteInitScript } from "@/lib/theme/palettes";
 import { Providers } from "./providers";
 
 const geistSans = Geist({
@@ -27,8 +28,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html
       lang="en"
       suppressHydrationWarning
+      data-palette={DEFAULT_PALETTE}
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: paletteInitScript }} />
+      </head>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <Providers>
           <ProgressProvider>

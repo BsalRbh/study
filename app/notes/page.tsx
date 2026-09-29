@@ -31,7 +31,7 @@ export default async function NotePage(props: PageProps<"/notes">) {
       <Link href={`/syllabus?${q}`} className="text-sm text-muted hover:text-foreground">
         ← {unit.unit}
       </Link>
-      <h1 className="mt-2 text-2xl font-semibold">{topic}</h1>
+      <h1 className="mt-2 text-2xl font-semibold tracking-tight sm:text-3xl">{topic}</h1>
 
       <Card className="mt-5 bg-accent/10 p-4">
         <div className="text-xs font-medium uppercase tracking-wide text-muted">
@@ -55,7 +55,7 @@ export default async function NotePage(props: PageProps<"/notes">) {
           <span className="group-open:hidden">I&apos;ve tried. Show the notes</span>
           <span className="hidden group-open:inline">Hide notes</span>
         </summary>
-        <article className="mt-5 leading-relaxed text-foreground">
+        <article className="mt-5 text-[15px] leading-7 text-foreground/90 sm:text-base">
           <MathText text={note.body} />
         </article>
         {hasCards && (

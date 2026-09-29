@@ -85,7 +85,7 @@ export function SubjectDashboard({
     <div className="mx-auto max-w-3xl space-y-6 px-4 py-8">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-semibold">{subject.name}</h1>
+          <h1 className="text-2xl font-semibold tracking-tight sm:text-3xl">{subject.name}</h1>
           <p className="text-muted">
             {daysLeft === null
               ? "Set your exam date to see a countdown."
@@ -116,9 +116,21 @@ export function SubjectDashboard({
         ) : (
           <div className="grid gap-3 sm:grid-cols-2">
             {actions.slice(0, 4).map((action) => (
-              <Link key={action.href} href={action.href}>
-                <Card className="h-full p-4 transition-colors hover:border-accent">
-                  <div className="font-medium">{action.title}</div>
+              <Link
+                key={action.href}
+                href={action.href}
+                className="group block rounded-2xl outline-none focus-visible:ring-2 focus-visible:ring-accent"
+              >
+                <Card className="h-full border-l-4 border-l-accent p-4 transition duration-200 group-hover:-translate-y-0.5 group-hover:shadow-lg">
+                  <div className="flex items-center justify-between gap-2 font-medium">
+                    {action.title}
+                    <span
+                      aria-hidden
+                      className="text-accent transition-transform group-hover:translate-x-0.5"
+                    >
+                      →
+                    </span>
+                  </div>
                   <div className="mt-1 text-sm text-muted">{action.detail}</div>
                 </Card>
               </Link>
