@@ -7,6 +7,7 @@ import { buildQuizQuestions } from "@/lib/progress/quiz";
 import { XP_REWARDS } from "@/lib/progress/rules";
 import { useProgress } from "@/lib/progress/useProgress";
 import { MathText } from "@/components/MathText";
+import { StudyLayout } from "@/components/StudyLayout";
 
 export function QuizRunner({
   subjectId,
@@ -75,8 +76,13 @@ export function QuizRunner({
     );
   }
 
+  const upNext = questions.slice(index + 1).map((q, i) => ({
+    id: `${index + 1 + i}`,
+    label: q.prompt,
+  }));
+
   return (
-    <div className="mx-auto max-w-xl px-4 py-8">
+    <StudyLayout doneCount={index} totalCount={questions.length} upNext={upNext}>
       <div className="mb-4 flex justify-between text-sm text-muted">
         <span>
           Question {index + 1} / {questions.length}
@@ -120,6 +126,6 @@ export function QuizRunner({
           );
         })}
       </div>
-    </div>
+    </StudyLayout>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useState } from "react";
 import { Button, Card } from "@heroui/react";
 import type { Flashcard, SubjectContent } from "@/content/types";
 import { todayIso } from "@/lib/progress/date";
@@ -65,15 +65,14 @@ export function FlashcardDeck({
   }, [filtered, progress, mode, subjectId]);
   const [index, setIndex] = useState(0);
   const [sessionDone, setSessionDone] = useState(0);
-  // The session's starting size, snapshotted the first time this unit/mode's
-  // queue is seen, so "done" is a fraction of what the session started with
-  // rather than the ever-shrinking live queue.
-  const sessionTotalRef = useRef<{ key: string; total: number } | null>(null);
-  const sessionKey = `${unitFilter}:${mode}`;
-  if (sessionTotalRef.current?.key !== sessionKey) {
-    sessionTotalRef.current = { key: sessionKey, total: queue.length };
-  }
-  const sessionTotal = sessionTotalRef.current.total;
+  // The session's starting size, recomputed only when the unit/mode changes
+  // (not on every answer), so "done" is a fraction of what the session
+  // started with rather than the ever-shrinking live queue.
+  const sessionTotal = useMemo(
+    () => queue.length,
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentionally excludes `progress`/`queue`, which shrink as cards are answered; only recompute when the filter itself changes.
+    [unitFilter, mode]
+  );
   const card: Flashcard | undefined = queue.length ? queue[index % queue.length] : undefined;
 
   function handleResult(result: "knew" | "missed") {
@@ -87,9 +86,12 @@ export function FlashcardDeck({
 
   const info = mode === "due" ? null : MODE_INFO[mode];
   const countLabel = mode === "weak" ? `${queue.length} weak` : `${queue.length} due today`;
+  const upNext = queue
+    .slice(1)
+    .map((c) => ({ id: c.id, label: c.front }));
 
   return (
-    <div className="mx-auto max-w-xl px-4 py-8">
+    <StudyLayout doneCount={sessionDone} totalCount={sessionTotal} upNext={card ? upNext : []}>
       {info && (
         <div className="mb-4 rounded-xl bg-accent/10 p-3 text-sm text-foreground">
           <div className="flex items-center justify-between gap-2">
@@ -114,6 +116,7 @@ export function FlashcardDeck({
             setUnitFilter(v);
             setIndex(0);
             setFlipped(false);
+            setSessionDone(0);
           }}
         />
         <span className="ml-auto text-sm text-muted">{countLabel}</span>
@@ -179,6 +182,6 @@ export function FlashcardDeck({
           )}
         </div>
       )}
-    </div>
+    </StudyLayout>
   );
 }

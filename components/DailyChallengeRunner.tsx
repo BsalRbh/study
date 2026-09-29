@@ -7,6 +7,7 @@ import { buildDailyChallenge } from "@/lib/progress/dailyChallenge";
 import { todayIso } from "@/lib/progress/date";
 import { useProgress } from "@/lib/progress/useProgress";
 import { MathText } from "@/components/MathText";
+import { StudyLayout } from "@/components/StudyLayout";
 
 export function DailyChallengeRunner({
   subjectId,
@@ -60,8 +61,13 @@ export function DailyChallengeRunner({
     );
   }
 
+  const upNext = items.slice(index + 1).map((it, i) => ({
+    id: it.kind === "flashcard" ? it.card.id : it.question.id,
+    label: it.kind === "flashcard" ? `Flashcard ${index + 2 + i}` : `Question ${index + 2 + i}`,
+  }));
+
   return (
-    <div className="mx-auto max-w-xl px-4 py-8">
+    <StudyLayout doneCount={index} totalCount={items.length} upNext={upNext}>
       <div className="mb-4 text-sm text-muted">
         Item {index + 1} / {items.length}
       </div>
@@ -129,6 +135,6 @@ export function DailyChallengeRunner({
           )}
         </div>
       )}
-    </div>
+    </StudyLayout>
   );
 }

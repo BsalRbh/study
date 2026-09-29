@@ -8,6 +8,7 @@ import { XP_REWARDS } from "@/lib/progress/rules";
 import { seededShuffle } from "@/lib/progress/seededShuffle";
 import { useProgress } from "@/lib/progress/useProgress";
 import { MathText } from "@/components/MathText";
+import { StudyLayout } from "@/components/StudyLayout";
 
 export function RecallRunner({
   subjectId,
@@ -74,8 +75,15 @@ export function RecallRunner({
     );
   }
 
+  // Showing the upcoming definitions would give away the answers, so "up
+  // next" just lists placeholders here rather than spoiling the term.
+  const upNext = terms.slice(index + 1).map((t, i) => ({
+    id: t.term,
+    label: `Term ${index + 2 + i}`,
+  }));
+
   return (
-    <div className="mx-auto max-w-xl px-4 py-8">
+    <StudyLayout doneCount={index} totalCount={terms.length} upNext={upNext}>
       <div className="mb-4 flex justify-between text-sm text-muted">
         <span>
           Term {index + 1} / {terms.length}
@@ -98,7 +106,13 @@ export function RecallRunner({
         >
           <Input autoFocus placeholder="Type the term..." />
         </TextField>
-        <Button type="submit" variant="primary" isDisabled={revealed !== null}>
+        <Button
+          type="submit"
+          size="lg"
+          className="min-h-11"
+          variant="primary"
+          isDisabled={revealed !== null}
+        >
           Check
         </Button>
       </form>
@@ -109,6 +123,6 @@ export function RecallRunner({
           {revealed === "correct" ? "Correct!" : `Not quite — it was "${term.term}"`}
         </p>
       )}
-    </div>
+    </StudyLayout>
   );
 }
